@@ -248,7 +248,7 @@ p {
 
 .section {
   position: relative;
-  padding: 7.5rem 0;
+  padding: 4.8rem 0;
 }
 
 .section::before {
@@ -646,7 +646,7 @@ body[data-theme="light"] .theme-toggle-icon::before {
   grid-template-columns: minmax(0, 1.08fr) minmax(370px, 0.92fr);
   align-items: center;
   gap: 2.25rem;
-  padding: 8.7rem 0 8.15rem;
+  padding: 6rem 0 6.5rem;
 }
 
 .hero-copy {
@@ -1095,7 +1095,7 @@ body[data-theme="light"] .carousel-next {
   position: relative;
   z-index: 8;
   margin-top: -4.35rem;
-  padding-bottom: 1.7rem;
+  padding-bottom: 0.8rem;
 }
 
 .metrics-band-grid {
@@ -1103,7 +1103,7 @@ body[data-theme="light"] .carousel-next {
 }
 
 .metric-card {
-  padding: 1.7rem;
+  padding: 1.35rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 30px;
   background:
@@ -1155,7 +1155,7 @@ body[data-theme="light"] .metric-card-label {
   position: relative;
   z-index: 2;
   max-width: 780px;
-  margin-bottom: 3.4rem;
+  margin-bottom: 2.2rem;
 }
 
 .section-heading.centered {
@@ -1191,7 +1191,7 @@ body[data-theme="light"] .metric-card-label {
 .about-grid,
 .form-grid {
   display: grid;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 .highlights-grid {
@@ -1257,7 +1257,7 @@ body[data-theme="light"] .metric-card-label {
 
 .feature-card,
 .service-card {
-  padding: 1.95rem;
+  padding: 1.45rem;
   border-radius: var(--radius);
 }
 
@@ -1267,7 +1267,7 @@ body[data-theme="light"] .metric-card-label {
   display: grid;
   place-items: center;
   border-radius: 18px;
-  margin-bottom: 1.3rem;
+  margin-bottom: 0.9rem;
   background: linear-gradient(135deg, rgba(93, 141, 255, 0.24), rgba(119, 239, 208, 0.14));
   color: #ffffff;
   font-weight: 800;
@@ -1297,7 +1297,7 @@ body[data-theme="light"] .metric-card-label {
 .about-grid {
   grid-template-columns: minmax(0, 0.95fr) minmax(350px, 0.85fr);
   align-items: start;
-  gap: 2rem;
+  gap: 1.25rem;
 }
 
 .about-cards-stack {
@@ -1309,7 +1309,7 @@ body[data-theme="light"] .metric-card-label {
   display: flex;
   align-items: flex-start;
   gap: 1.1rem;
-  padding: 1.6rem 1.5rem;
+  padding: 1.2rem 1.25rem;
   border-radius: var(--radius);
 }
 
@@ -1561,7 +1561,7 @@ body[data-theme="light"] .product-visual::after {
 .quote-grid {
   grid-template-columns: minmax(0, 0.95fr) minmax(390px, 0.92fr);
   align-items: start;
-  gap: 2rem;
+  gap: 1.25rem;
 }
 
 .quote-copy {
@@ -1633,7 +1633,7 @@ body[data-theme="light"] .product-visual::after {
 
 .quote-form {
   position: relative;
-  padding: 1.9rem;
+  padding: 1.45rem;
   border-radius: 32px;
   border: 1px solid rgba(255, 255, 255, 0.11);
   background:
@@ -2071,10 +2071,10 @@ body.cursor-hover .custom-cursor-ring {
 }
 
 @media (max-width: 860px) {
-  /* Simplifie les décors qui débordent le plus sur les petits écrans */
+  /* Hide heavy decorative elements to improve performance and avoid overflows */
   .hero-orb,
   .glow-blob {
-    display: none;
+    display: none !important;
   }
 
   .hero-backdrop,
@@ -2117,34 +2117,113 @@ body.cursor-hover .custom-cursor-ring {
     gap: 0.6rem;
   }
 
+  /* Morphing hamburger animation */
   .nav-toggle {
     display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border-radius: 50%;
+    color: var(--text-strong);
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
   }
 
+  .nav-toggle:active {
+    transform: scale(0.92);
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .nav-toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    margin: 5px auto;
+    border-radius: 999px;
+    background: currentColor;
+    transition: transform 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
+  }
+
+  .nav-toggle[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .nav-toggle[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .nav-toggle[aria-expanded="true"] span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* Sleek mobile drop-down menu with smooth fade/scale animation */
   .nav-menu {
     position: absolute;
     top: calc(100% + 0.7rem);
     left: 1rem;
     right: 1rem;
-    display: none;
+    display: flex;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-12px) scale(0.97);
+    transform-origin: top right;
     flex-direction: column;
     align-items: stretch;
-    padding: 1rem;
+    padding: 1.25rem;
     border-radius: 24px;
-    background: color-mix(in srgb, var(--surface-strong) 92%, transparent);
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow-soft);
-    backdrop-filter: blur(18px);
+    background: color-mix(in srgb, var(--surface-strong) 94%, transparent);
+    border: 1px solid var(--border-strong);
+    box-shadow: var(--shadow-strong);
+    backdrop-filter: blur(24px) saturate(170%);
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                visibility 0.3s;
+    z-index: 100;
   }
 
   .nav-menu.open {
-    display: flex;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
   }
 
   .nav-menu a,
   .nav-cta {
     width: 100%;
     justify-content: center;
+    text-align: center;
+  }
+
+  /* Mobile menu background dim backdrop overlay */
+  .nav-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 65;
+    background: rgba(4, 9, 20, 0.55);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.35s ease, visibility 0.35s;
+    pointer-events: none;
+  }
+
+  .nav-overlay.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  body[data-theme="light"] .nav-overlay {
+    background: rgba(220, 230, 250, 0.4);
+  }
+
+  /* Optimize Hero section layout for tablet/mobile: hide desktop panels */
+  .hero-visual-panel {
+    display: none !important;
   }
 
   .hero-carousel {
@@ -2166,15 +2245,43 @@ body.cursor-hover .custom-cursor-ring {
 
   .hero-shell {
     gap: 1.3rem;
-    padding: 6.6rem 0 8.8rem;
+    padding: 4.8rem 0 6rem;
   }
 
-  .hero-copy,
-  .hero-visual-panel {
+  /* Center hero copy and align items */
+  .hero-copy {
     max-width: 100%;
+    text-align: center !important;
+    margin-inline: auto !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
-  .hero-copy h1,
+  .hero-copy h1 {
+    margin-inline: auto;
+    text-align: center;
+    text-wrap: pretty;
+  }
+
+  .hero-subtitle {
+    margin-inline: auto !important;
+    text-align: center;
+    text-wrap: pretty;
+  }
+
+  .hero-badges,
+  .hero-actions,
+  .hero-trustline {
+    justify-content: center !important;
+    gap: 0.7rem;
+  }
+
+  .hero-actions {
+    width: 100% !important;
+  }
+
   .section-heading h2,
   .contact-intro-card strong,
   .hero-card-primary h2,
@@ -2182,49 +2289,61 @@ body.cursor-hover .custom-cursor-ring {
     text-wrap: pretty;
   }
 
-  .hero-badges,
-  .hero-actions,
-  .hero-trustline {
-    gap: 0.7rem;
+  /* Custom WhatsApp actions link style */
+  .hero-actions .hero-whatsapp-link {
+    border-color: rgba(37, 211, 102, 0.4) !important;
+    background: rgba(37, 211, 102, 0.08) !important;
   }
 
-  .panel-topline {
-    grid-template-columns: 1fr;
-    justify-items: start;
+  .hero-actions .hero-whatsapp-link:hover,
+  .hero-actions .hero-whatsapp-link:focus-visible {
+    background: rgba(37, 211, 102, 0.16) !important;
+    border-color: rgba(37, 211, 102, 0.6) !important;
   }
 
-  .hero-floating-note {
-    grid-template-columns: auto 1fr;
+  /* Floating WhatsApp button pulse animation & styles */
+  .floating-whatsapp {
+    position: fixed;
+    bottom: 1.25rem;
+    right: 1.25rem;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    color: #ffffff;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 10px 28px rgba(37, 211, 102, 0.44), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    z-index: 80;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+    animation: whatsapp-pulse 2.2s infinite;
   }
 
-  .carousel-prev,
-  .carousel-next {
-    top: auto;
-    bottom: 7.2rem;
-    transform: none;
-    width: 48px;
-    height: 48px;
+  .floating-whatsapp:hover,
+  .floating-whatsapp:focus-visible {
+    transform: scale(1.08) translateY(-2px);
+    box-shadow: 0 14px 36px rgba(37, 211, 102, 0.54);
   }
 
-  .carousel-prev {
-    left: 1rem;
+  .floating-whatsapp:active {
+    transform: scale(0.95);
   }
 
-  .carousel-next {
-    right: 1rem;
-  }
-
-  .carousel-prev:hover,
-  .carousel-next:hover,
-  .carousel-prev:focus-visible,
-  .carousel-next:focus-visible {
-    transform: scale(1.05);
+  @keyframes whatsapp-pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6), 0 10px 28px rgba(37, 211, 102, 0.44);
+    }
+    70% {
+      box-shadow: 0 0 0 14px rgba(37, 211, 102, 0), 0 10px 28px rgba(37, 211, 102, 0.44);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(37, 211, 102, 0), 0 10px 28px rgba(37, 211, 102, 0.44);
+    }
   }
 
   .form-grid,
   .hero-card-footer,
-  .about-mini-grid,
-  .hero-mini-metrics {
+  .about-mini-grid {
     grid-template-columns: 1fr;
   }
 
@@ -2237,7 +2356,6 @@ body.cursor-hover .custom-cursor-ring {
   }
 
   .quote-form,
-  .hero-visual-glass,
   .hero-card,
   .contact-intro-card,
   .map-card {
@@ -2251,7 +2369,7 @@ body.cursor-hover .custom-cursor-ring {
   }
 
   .section {
-    padding: 5.25rem 0;
+    padding: 4.8rem 0;
   }
 
   .brand {
@@ -2288,14 +2406,17 @@ body.cursor-hover .custom-cursor-ring {
   }
 
   .hero-shell {
-    padding: 6.1rem 0 8.1rem;
+    padding: 4.2rem 0 5.2rem;
   }
 
+  /* Inline badges on mobile that wrap instead of 100% width blocks */
   .hero-badges span,
   .hero-trustline span {
-    width: 100%;
-    justify-content: center;
-    text-align: center;
+    width: auto;
+    flex: 0 1 auto;
+    font-size: 0.82rem;
+    padding: 0.5rem 0.8rem;
+    min-height: auto;
   }
 
   .hero-actions,
@@ -2304,15 +2425,196 @@ body.cursor-hover .custom-cursor-ring {
     width: 100%;
   }
 
-  .metrics-band {
-    margin-top: -1.2rem;
+  /* Tactile active state for buttons on tap */
+  .btn:active {
+    transform: translateY(1px) scale(0.98);
   }
 
-  .metrics-band-grid,
-  .highlights-grid,
-  .services-list,
+  .metrics-band {
+    margin-top: -1.8rem;
+    padding-bottom: 1rem;
+  }
+
+  /* 2-column metrics band layout on mobile (replaces vertical stack) */
+  .metrics-band-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 0.65rem !important;
+  }
+
+  .metric-card {
+    padding: 1.1rem !important;
+    border-radius: 20px !important;
+  }
+
+  .metric-card strong {
+    font-size: 1.3rem !important;
+    margin: 0.4rem 0 !important;
+  }
+
+  .metric-card strong [data-count] {
+    font-size: 1.35em !important;
+  }
+
+  .metric-card p {
+    font-size: 0.82rem !important;
+    line-height: 1.4 !important;
+  }
+
+  /* 2-column Highlights layout on mobile (replaces vertical stack) */
+  .highlights-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 0.65rem !important;
+  }
+
+  .feature-card {
+    padding: 1.25rem 1.1rem !important;
+    border-radius: 20px !important;
+  }
+
+  .feature-icon {
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 12px !important;
+    margin-bottom: 0.8rem !important;
+    font-size: 0.9rem !important;
+  }
+
+  .feature-card h3 {
+    font-size: 0.98rem !important;
+    margin-bottom: 0.5rem !important;
+    line-height: 1.3 !important;
+  }
+
+  .feature-card p {
+    font-size: 0.8rem !important;
+    line-height: 1.45 !important;
+  }
+
+  /* Info cards (Notre mission etc) in About: keep horizontal row flow on mobile */
+  .info-card {
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 1rem !important;
+    padding: 1.15rem 1rem !important;
+    border-radius: 22px !important;
+  }
+
+  .info-card-num {
+    min-width: 44px !important;
+    width: 44px !important;
+    height: 44px !important;
+    font-size: 0.95rem !important;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 20px rgba(93, 141, 255, 0.16) !important;
+  }
+
+  .info-card-content h3 {
+    font-size: 1.05rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  .info-card-content p {
+    font-size: 0.86rem !important;
+    line-height: 1.45 !important;
+  }
+
+  /* 2-column Services Grid layout on mobile (replaces vertical stack) */
+  .services-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 0.65rem !important;
+  }
+
+  .service-card {
+    padding: 1.1rem !important;
+    border-radius: 20px !important;
+    gap: 0.6rem !important;
+  }
+
+  .service-card-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.6rem !important;
+  }
+
+  .service-icon-wrapper {
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 12px !important;
+  }
+
+  .service-icon-wrapper svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .service-card h3 {
+    font-size: 0.98rem !important;
+    margin: 0 !important;
+    line-height: 1.3 !important;
+  }
+
+  .service-card p {
+    font-size: 0.8rem !important;
+    line-height: 1.45 !important;
+  }
+
+  /* Horizontal Scroll Snap Products on mobile (replaces long vertical list) */
   .product-grid {
-    grid-template-columns: 1fr;
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    scroll-behavior: smooth !important;
+    -webkit-overflow-scrolling: touch;
+    gap: 0.85rem !important;
+    padding: 0.5rem 1rem 1.6rem !important;
+    margin-inline: -1rem !important;
+    scrollbar-width: none !important;
+  }
+
+  .product-grid::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .product-card {
+    flex: 0 0 82vw !important;
+    max-width: 320px !important;
+    scroll-snap-align: center !important;
+    margin: 0 !important;
+    border-radius: 24px !important;
+    background: var(--surface-card-solid) !important;
+  }
+
+  .product-body {
+    padding: 1.25rem !important;
+    gap: 0.72rem !important;
+  }
+
+  .product-body h3 {
+    font-size: 1.1rem !important;
+    margin-bottom: 0.4rem !important;
+  }
+
+  .product-body p {
+    font-size: 0.86rem !important;
+    line-height: 1.5 !important;
+  }
+
+  .catalogue .container::after {
+    content: "Faites glisser pour explorer les produits ➔";
+    display: block;
+    text-align: center;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text-soft);
+    margin-top: 0.8rem;
+    letter-spacing: 0.05em;
+    animation: swipe-hint 2s infinite ease-in-out;
+  }
+
+  /* Hide carousel arrow controls on mobile since swipe touch controls are enabled */
+  .carousel-prev,
+  .carousel-next {
+    display: none !important;
   }
 
   .hero-visual-glass,
@@ -2323,54 +2625,13 @@ body.cursor-hover .custom-cursor-ring {
     padding: 1.15rem;
   }
 
-  .feature-card,
-  .service-card,
-  .contact-item,
-  .info-card,
-  .metric-card {
-    padding: 1.35rem;
-  }
-
-  .info-card {
-    flex-direction: column;
-  }
-
-  .info-card-num {
-    min-width: 52px;
-    width: 52px;
-    height: 52px;
-  }
-
-  .feature-icon,
-  .service-icon-wrapper {
-    width: 50px;
-    height: 50px;
-  }
-
-  .metric-card strong {
-    font-size: 1.35rem;
-  }
-
   .carousel-footer {
     width: min(calc(100% - 1rem), 320px);
     bottom: 1rem;
   }
 
-  .carousel-prev,
-  .carousel-next {
-    bottom: 4.8rem;
-  }
-
   .indicator.active {
     width: 28px;
-  }
-
-  .hero-floating-note {
-    grid-template-columns: 1fr;
-  }
-
-  .hero-floating-note small {
-    grid-column: auto;
   }
 
   .product-body,
@@ -2386,6 +2647,11 @@ body.cursor-hover .custom-cursor-ring {
   .quote-form input,
   .quote-form textarea {
     padding-inline: 0.9rem;
+    min-height: 48px; /* Ideal mobile touch target */
+  }
+
+  .quote-form textarea {
+    min-height: 110px;
   }
 
   .map-frame-wrap,
@@ -2444,7 +2710,7 @@ body.cursor-hover .custom-cursor-ring {
   .contact-item,
   .info-card,
   .metric-card {
-    padding: 1rem;
+    padding: 1rem !important;
   }
 
   .panel-chip,
