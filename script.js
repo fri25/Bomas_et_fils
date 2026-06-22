@@ -1,7 +1,7 @@
 const CONTACT = {
   whatsappNumber: "+2290196524263",
   phone: "+229 01 97 11 22 11",
-  email: "+229 01 96 52 42 63",
+  email: "victorineagomadj@gmail.com",
   address: "895M+7MR, Natitingou, Bénin",
   mapsQuery: "895M+7MR, Natitingou, Bénin"
 };
@@ -14,6 +14,7 @@ const DEFAULTS = {
 
 const navToggle = document.getElementById("navToggle");
 const navMenu = document.getElementById("navMenu");
+const navOverlay = document.getElementById("navOverlay");
 const siteHeader = document.querySelector(".site-header");
 const themeToggle = document.getElementById("themeToggle");
 const themeToggleText = document.getElementById("themeToggleText");
@@ -23,17 +24,25 @@ window.addEventListener("load", () => {
 });
 
 if (navToggle && navMenu) {
+  const closeMenu = () => {
+    navMenu.classList.remove("open");
+    navToggle.setAttribute("aria-expanded", "false");
+    if (navOverlay) navOverlay.classList.remove("open");
+  };
+
   navToggle.addEventListener("click", () => {
     const isOpen = navMenu.classList.toggle("open");
     navToggle.setAttribute("aria-expanded", String(isOpen));
+    if (navOverlay) navOverlay.classList.toggle("open", isOpen);
   });
 
   navMenu.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      navMenu.classList.remove("open");
-      navToggle.setAttribute("aria-expanded", "false");
-    });
+    link.addEventListener("click", closeMenu);
   });
+
+  if (navOverlay) {
+    navOverlay.addEventListener("click", closeMenu);
+  }
 }
 
 
@@ -179,6 +188,11 @@ function configureContacts() {
 
   if (whatsappText) {
     whatsappText.textContent = CONTACT.whatsappNumber ? "Ouvrir WhatsApp" : "Renseignez votre numéro WhatsApp";
+  }
+
+  const floatingWhatsapp = document.getElementById("floatingWhatsapp");
+  if (floatingWhatsapp) {
+    floatingWhatsapp.href = whatsappHref;
   }
 
   if (CONTACT.mapsQuery && mapFrame) {
